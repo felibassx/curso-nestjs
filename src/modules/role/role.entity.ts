@@ -7,7 +7,7 @@ export class Role extends BaseEntity {
     @PrimaryGeneratedColumn('increment')
     id: number;
 
-    @Column({ type: 'varchar', length: 25, nullable: false })
+    @Column({ type: 'varchar', unique: true, length: 25, nullable: false })
     name: string;
 
     @Column({ type: 'text', nullable: false })
