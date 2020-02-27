@@ -10,7 +10,7 @@ export class UserController {
     ) { }
 
     @Get(':id')
-    async getUser(@Param('id', ParseIntPipe) id: number): Promise<UserDto> {
+    async getUser(@Param('id', ParseIntPipe) id: number): Promise<User> {
         const user = await this._userService.get(id);
         return user;
     }
@@ -22,7 +22,7 @@ export class UserController {
     }
 
     @Post()
-    async createduser(@Body() user: User): Promise<UserDto> {
+    async createduser(@Body() user: User): Promise<User> {
         const createdUser = await this._userService.create(user);
         return createdUser;
     }

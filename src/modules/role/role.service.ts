@@ -1,7 +1,6 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { RoleRepository } from './role.repository';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MapperService } from '../../shared/mapper.service';
 import { Role } from './role.entity';
 import { getConnection } from 'typeorm';
 
@@ -11,7 +10,6 @@ export class RoleService {
     constructor(
         @InjectRepository(RoleRepository)
         private readonly _roleRepository: RoleRepository,
-        private readonly _mapperService: MapperService,
     ) {
 
     }
@@ -38,14 +36,14 @@ export class RoleService {
         const roles: Role[] = await this._roleRepository
             .find({ where: { status: 'ACTIVE' } });
 
-        return roles; // this._mapperService.mapCollection<Role, RoleDto>(roles, new RoleDto[]());
+        return roles;
 
     }
 
     async create(role: Role): Promise<Role> {
 
         const savedRole = await this._roleRepository.save(role);
-        return savedRole; // this._mapperService.map<Role, RoleDto>(savedRole, new RoleDto());
+        return savedRole;
     }
 
     async update(id: number, role: Role): Promise<void> {
