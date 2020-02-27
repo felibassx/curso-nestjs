@@ -14,9 +14,10 @@ export const databaseProviders = [
         inject: [ConfigService],
         async useFactory(config: ConfigService) {
             return {
-                ssl: true,
                 type: 'postgres' as 'postgres',
                 host: config.get(Configuration.HOST),
+                port: 5444,
+                database: config.get(Configuration.DATABASE),
                 username: config.get(Configuration.USERNAME),
                 password: config.get(Configuration.PASSWORD),
                 entities: [__dirname + '/../**/*.entity{.ts,.js}'],
