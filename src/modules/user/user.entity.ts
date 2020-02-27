@@ -1,4 +1,6 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinTable, ManyToMany, JoinColumn } from 'typeorm';
+import { UserDetails } from './user.details.entity';
+import { Role } from '../role/role.entity';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -23,5 +25,14 @@ export class User extends BaseEntity {
 
     @Column({ type: 'timestamp', name: 'update_at' })
     updateAt: Date;
+
+    @OneToOne(type => UserDetails, { cascade: true, nullable: false, eager: true })
+    @JoinColumn({ name: 'detail_id' })
+    details: UserDetails;
+
+    // lógica many to many
+    @ManyToMany(type => Role, role => role.users)
+    @JoinTable({ name: 'user_roles' })
+    roles: Role[];
 
 }
