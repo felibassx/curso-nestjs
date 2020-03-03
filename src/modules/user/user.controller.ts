@@ -1,7 +1,7 @@
-import { Controller, Get, Param, Body, Post, Patch, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Param, Body, Post, Patch, Delete, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './user.entity';
-import { UserDto } from './dto/user.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
 export class UserController {
@@ -15,6 +15,7 @@ export class UserController {
         return user;
     }
 
+    @UseGuards(AuthGuard()) // se puede utilizar a nivel de método o a nivel de clase
     @Get()
     async getUsers(): Promise<User[]> {
         const users = await this._userService.getAll();

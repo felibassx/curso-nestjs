@@ -34,7 +34,7 @@ export class AuthRepository extends Repository<User> {
         const details = new UserDetails();
         user.details = details;
 
-        // manejo del password
+        // manejo del password 
         const salt = await genSalt(10);
         user.password = await hash(password, salt);
 
