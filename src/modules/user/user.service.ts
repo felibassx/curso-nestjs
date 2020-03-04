@@ -94,6 +94,14 @@ export class UserService {
 
     }
 
+    async deleteAllInactive(): Promise<boolean> {
+
+        await this._userRepository.delete({ status: status.INACTIVE });
+
+        return true;
+
+    }
+
     async setRolToUser(userId: number, roleId: number): Promise<boolean> {
 
         const userExist = await this._userRepository

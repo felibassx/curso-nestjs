@@ -6,11 +6,13 @@ import { Role } from '../role/role.entity';
 import { RoleType } from '../role/roletype.enum';
 import { UserDetails } from '../user/user.details.entity';
 import { getSalt, hash, genSalt } from 'bcryptjs';
+import { ReadUserDto } from '../user/dto/read-user.dto';
+import { plainToClass } from 'class-transformer';
 
 @EntityRepository(User)
 export class AuthRepository extends Repository<User> {
 
-    async signup(signupDto: SignupDto) {
+    async signup(signupDto: SignupDto): Promise<ReadUserDto> {
 
         const { username, email, password } = signupDto;
         const user = new User();
@@ -38,7 +40,9 @@ export class AuthRepository extends Repository<User> {
         const salt = await genSalt(10);
         user.password = await hash(password, salt);
 
-        await user.save();
+        const userUp = await user.save();
+
+        return plainToClass(ReadUserDto, userUp);
 
     }
 }

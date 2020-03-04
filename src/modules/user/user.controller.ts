@@ -13,14 +13,14 @@ export class UserController {
         private readonly _userService: UserService,
     ) { }
 
-    @Get(':id')
-    @Roles('ADMIN', 'AUTHOR')
-    @UseGuards(AuthGuard(), RoleGuard)
-    getUser(@Param('id', ParseIntPipe) id: number): Promise<ReadUserDto> {
-        return this._userService.get(id);
+    @Get(':userId')
+    // @Roles('ADMIN', 'AUTHOR')
+    // @UseGuards(AuthGuard(), RoleGuard)
+    getUser(@Param('userId', ParseIntPipe) userId: number): Promise<ReadUserDto> {
+        return this._userService.get(userId);
     }
 
-    @UseGuards(AuthGuard()) // se puede utilizar a nivel de método o a nivel de clase
+    // @UseGuards(AuthGuard()) // se puede utilizar a nivel de método o a nivel de clase
     @Get()
     getUsers(): Promise<ReadUserDto[]> {
         return this._userService.getAll();
@@ -34,6 +34,11 @@ export class UserController {
     @Delete(':userId')
     deleteUser(@Param('userId', ParseIntPipe) id: number): Promise<boolean> {
         return this._userService.delete(id);
+    }
+
+    @Delete()
+    deleteUsersInactive(): Promise<boolean> {
+        return this._userService.deleteAllInactive();
     }
 
     @Post('setRole/:userId/:roleId')

@@ -8,6 +8,7 @@ import { User } from '../user/user.entity';
 import { compare } from 'bcryptjs';
 import { IJwtPayload } from './jwt-payload.interface';
 import { RoleType } from '../role/roletype.enum';
+import { ReadUserDto } from '../user/dto/read-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +18,7 @@ export class AuthService {
         private readonly _jwtService: JwtService,
     ) { }
 
-    async signup(signupDto: SignupDto): Promise<void> {
+    async signup(signupDto: SignupDto): Promise<ReadUserDto> {
         const { username, email } = signupDto;
         const userExists = await this._authRepository.findOne(
             {

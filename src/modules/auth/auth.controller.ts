@@ -2,6 +2,8 @@ import { Controller, Post, Body, UsePipes, ValidationPipe } from '@nestjs/common
 import { SignupDto } from './dto/signup.dto';
 import { AuthService } from './auth.service';
 import { SigninDto } from './dto/signin.dto';
+import { User } from '../user/user.entity';
+import { ReadUserDto } from '../user/dto/read-user.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -12,7 +14,7 @@ export class AuthController {
 
     @Post('/signup')
     @UsePipes(ValidationPipe)
-    async signup(@Body() signupDto: SignupDto): Promise<void> {
+    async signup(@Body() signupDto: SignupDto): Promise<ReadUserDto> {
         return this._authService.signup(signupDto);
     }
 

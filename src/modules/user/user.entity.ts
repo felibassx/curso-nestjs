@@ -1,6 +1,7 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinTable, ManyToMany, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { UserDetails } from './user.details.entity';
 import { Role } from '../role/role.entity';
+import { Book } from '../book/book.entity';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -31,6 +32,10 @@ export class User extends BaseEntity {
     details: UserDetails;
 
     // lógica many to many
+    @ManyToMany(type => Book, book => book.authors)
+    @JoinTable({ name: 'user_books' })
+    books: Book[];
+
     @ManyToMany(type => Role, role => role.users, { eager: true })
     @JoinTable({ name: 'user_roles' })
     roles: Role[];
