@@ -38,7 +38,7 @@ export class UserController {
 
     @Delete()
     deleteUsersInactive(): Promise<boolean> {
-        return this._userService.deleteAllInactive();
+        return null; // this._userService.deleteAllInactive();
     }
 
     @Post('setRole/:userId/:roleId')
